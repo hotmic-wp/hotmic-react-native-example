@@ -58,8 +58,8 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const hotMicApiKey = 'ac3daec7-1b61-456e-93f4-53f8b1e222ce';
-  const hotMicApiToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6eyJ1c2VyX2lkIjoiM2Q1NTY3YzItNjAzYy00YjA4LWI5MTctN2U5ZjA1YzhlYmI1IiwiZGlzcGxheV9uYW1lIjoidGVzdGVyMSIsInByb2ZpbGVfcGljIjoiaHR0cHM6Ly91aS1hdmF0YXJzLmNvbS9hcGkvP25hbWU9dGVzdCZiYWNrZ3JvdW5kPTBEQ0FENiZjb2xvcj1mZmYiLCJiYWRnZSI6Imh0dHBzOi8vaG90bWljLWNvbnRlbnQuczMudXMtd2VzdC0xLmFtYXpvbmF3cy5jb20vYmFkZ2VzLzEwX2JhZGdlLnBuZz9jMjUxZmVjZS1jMDhmLTQ4YTAtOTMxZS03MGNmZThlYTdlZDQifSwiaWF0IjoxNjU3NjU4NTU1LCJleHAiOjE4MjE3MjQwMTR9.0tuBRyMDRYj_J6ZOQe53_0jcBKqY5w4pv44O0rgSZqQ';
+  const hotMicApiKey = 'd34c0ae5-185b-4c3b-a55c-2d7ef9ebf5b6';
+  const hotMicApiToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6eyJ1c2VyX2lkIjoiM2Q1NTY3YzItNjAzYy00YjA4LWI5MTctN2U5ZjA1YzhlYmI1IiwiZGlzcGxheV9uYW1lIjoidGVzdGVyMSIsInByb2ZpbGVfcGljIjoiaHR0cHM6Ly91aS1hdmF0YXJzLmNvbS9hcGkvP25hbWU9dGVzdCZiYWNrZ3JvdW5kPTBEQ0FENiZjb2xvcj1mZmYiLCJiYWRnZSI6Imh0dHBzOi8vaG90bWljLWNvbnRlbnQuczMudXMtd2VzdC0xLmFtYXpvbmF3cy5jb20vYmFkZ2VzLzEwX2JhZGdlLnBuZz9jMjUxZmVjZS1jMDhmLTQ4YTAtOTMxZS03MGNmZThlYTdlZDQifSwiaWF0IjoxNjU3NjU4NTU1LCJleHAiOjE4MjE3MjQwMTR9.pbGB4K2D-tbxoQJPjj2Q1uxplchOtSERnhYWGSbkj1M';
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,7 +70,7 @@ function App(): JSX.Element {
           console.log('NativeModules.HotMicMediaPlayerBridge.initialize() called, now calling getStreams()');
 
           NativeModules.HotMicMediaPlayerBridge.getStreams(
-            "cad896c3-21ba-4311-9f83-f18d899114a8",
+            "fe8d32c5-60ae-45e2-a881-71edfc372777",
             100,
             0
           ).then((streamsData) => {
@@ -116,8 +116,22 @@ function App(): JSX.Element {
                 stream && (
                   <View key={index} style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}>Stream {index + 1}</Text>
-                    <Text style={styles.sectionDescription}>Title: {stream.title}</Text>
-                    {/* Add more details here... */}
+
+                    <Text 
+                      style={styles.sectionDescription}
+                      onPress={() => {
+                        if (NativeModules.HotMicMediaPlayerBridge) {
+                          console.log('NativeModules.HotMicMediaPlayerBridge.showPlayer() called');
+                          NativeModules.HotMicMediaPlayerBridge.showPlayer(stream.id)
+                          .then((response) => console.log(response))
+                          .catch((error) => console.error('Failed to show player:', error));
+                      
+                        }
+                      }}
+                    >
+                      Title: {stream.title}
+                    </Text>
+
                   </View>
                 )
               ))
